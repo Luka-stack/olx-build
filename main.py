@@ -1,11 +1,9 @@
-import uvicorn
 from fastapi import FastAPI
+import uvicorn
 
 from app.logger import LoggingMiddleware
-from app.database import Base, engine
 from app.advert.adverts_controller import router as advert_router
 
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 

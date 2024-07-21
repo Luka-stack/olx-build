@@ -1,8 +1,7 @@
 from typing import List, Optional
-from pydantic import BaseModel
 
 
-class UpdateAdvertDto(BaseModel):
+class UpdateAdvertDto():
     thumbnail: Optional[str] = None 
     title: Optional[str] = None 
     description: Optional[str] = None 

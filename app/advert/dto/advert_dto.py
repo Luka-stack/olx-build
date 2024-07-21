@@ -1,9 +1,8 @@
 import datetime
 from typing import List
-from pydantic import BaseModel
 
 
-class AdvertDto(BaseModel):
+class AdvertDto():
     slug: str
     thumbnail: str
     title: str

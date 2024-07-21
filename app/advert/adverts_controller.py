@@ -1,34 +1,47 @@
 from http import HTTPStatus
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
-from app.advert.dto.advert_dto import AdvertDto
+from app.advert.advert_validator import AdvertValidator
 from app.advert.adverts_service import AdvertsService
-from app.advert.dto.create_advert_dto import CreateAdvertDto
-from app.advert.dto.update_advert_dto import UpdateAdvertDto
 
 router = APIRouter(
     prefix="/adverts",
     tags=["adverts"],
 )
 
-@router.get("/{slug}", response_model=AdvertDto)
+@router.get("/{slug}")
 def read_advert(slug: str, advert_service: AdvertsService = Depends()):
     return advert_service.read_advert(slug)
 
-@router.get("/", response_model=list[AdvertDto])
+@router.get("/")
 def read_all(advert_service: AdvertsService = Depends()):
     return advert_service.read_all_adverts()
 
 @router.post(
     "/", 
-    response_model=AdvertDto, 
     status_code=HTTPStatus.CREATED
 )
-def create_advert(advertDto: CreateAdvertDto, advert_service: AdvertsService = Depends()):
+def create_advert(advertDto: dict, advert_service: AdvertsService = Depends()):
+    result = AdvertValidator.validate_create_advert(advertDto)
+    
+    if not result:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail="Invalid advert data"
+        )
+    
     return advert_service.create_advert(advertDto)
 
-@router.patch("/{slug}", response_model=AdvertDto)
-async def update_advert(slug: str, advertDto: UpdateAdvertDto, advert_service: AdvertsService = Depends()):
+@router.patch("/{slug}")
+async def update_advert(slug: str, advertDto: dict, advert_service: AdvertsService = Depends()):
+    result = AdvertValidator.validate_create_advert(advertDto)
+    
+    if not result:
+        raise HTTPException(
+            status_code=HTTPStatus.BAD_REQUEST,
+            detail="Invalid advert data"
+        )
+    
     return advert_service.update_advert(slug, advertDto)
 
 @router.delete("/{slug}", status_code=HTTPStatus.NO_CONTENT)

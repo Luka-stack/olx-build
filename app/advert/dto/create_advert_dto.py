@@ -1,8 +1,7 @@
 from typing import List
-from pydantic import BaseModel
 
 
-class CreateAdvertDto(BaseModel):
+class CreateAdvertDto():
     thumbnail: str
     title: str
     description: str

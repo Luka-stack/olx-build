@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "olx-build"
+version = "0.1.0"
+description = ""
+authors = ["lkrra <lkr.rafa@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.1"
+sqlalchemy = "^2.0.31"
+pytest = "^8.3.1"
+psycopg2 = "^2.9.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

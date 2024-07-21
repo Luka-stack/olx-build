@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 
 from app.advert.adverts_service import AdvertsService
 from app.advert.dto.advert_dto import AdvertDto
-from app.main import app
+from app.server import app
 
 mock_advert_service = Mock(spec=AdvertsService)
 app.dependency_overrides[AdvertsService] = lambda: mock_advert_service
